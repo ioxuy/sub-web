@@ -224,7 +224,7 @@
 const project = process.env.VUE_APP_PROJECT
 const remoteConfigSample = process.env.VUE_APP_SUBCONVERTER_REMOTE_CONFIG
 const gayhubRelease = process.env.VUE_APP_BACKEND_RELEASE
-const defaultBackend = process.env.VUE_APP_SUBCONVERTER_DEFAULT_BACKEND + '/sub?'
+const defaultBackend = window.location.origin + '/sub?'
 const shortUrlBackend = process.env.VUE_APP_MYURLS_DEFAULT_BACKEND + '/short'
 const configUploadBackend = process.env.VUE_APP_CONFIG_UPLOAD_BACKEND + '/config/upload'
 const tgBotLink = process.env.VUE_APP_BOT_LINK
@@ -255,7 +255,7 @@ export default {
           ClashR: "clashr",
           Surge2: "surge&ver=2",
         },
-        backendOptions: [{ value: "http://127.0.0.1:25500/sub?" }],
+        backendOptions: [{ value: defaultBackend }],
         remoteConfig: [
           {
             label: "universal",
@@ -269,7 +269,12 @@ export default {
                 label: "Urltest",
                 value:
                   "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/universal/urltest.ini"
-              }
+              },
+              { //添加神机,默认选择需要
+                label: 'ConnersHua 神机规则 Outbound',
+                value:
+                  'https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_new.ini',
+              }  
             ]
           },
           {
@@ -388,8 +393,9 @@ export default {
     }
   },
   mounted() {
-    this.form.clientType = "clash";
-    this.notify();
+    this.form.clientType = "surge&ver=4"; //默认设置为surge4
+    this.form.remoteConfig = 'https://gist.githubusercontent.com/tindy2013/1fa08640a9088ac8652dbd40c5d2715b/raw/connershua_new.ini';  //默认设置为神机
+//    this.notify(); //取消通知
     this.getBackendVersion();
   },
   methods: {
